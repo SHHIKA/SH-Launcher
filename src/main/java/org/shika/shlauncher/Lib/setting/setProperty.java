@@ -10,6 +10,9 @@ import java.util.Scanner;
 
 public class setProperty implements Serializable {
     private static final DatObject dat = new DatObject("config.dat");
+    private static final DatObject names = new DatObject("names.dat");
+
+    private static final Map<String, Object> name = names.getMap();
     private static final Map<String, Object> map = dat.getMap();
     private static Data data;
 
@@ -59,7 +62,8 @@ public class setProperty implements Serializable {
         data = new Data();
         Console.WriteLine(Color.CYAN + "設定を始めます");
         Console.WriteLine("名前を入力してください(表示される名前)");
-        data.setName(Console.ReadLine());
+        String in = Console.ReadLine();
+        data.setName(in);
 
         Console.WriteLine("コマンドを入力してください");
         String cmd = new Scanner(System.in).nextLine();
@@ -68,10 +72,10 @@ public class setProperty implements Serializable {
         Console.WriteLine("ショートカットキーを設定します");
         Console.WriteLine("大文字のアルファベットまたは数字を入力してください");
         data.setKeyName(Console.ReadLine());
-
         Console.WriteLine("データを作成しました");
 
         map.put(data.getKeyName(), data);
+        name.put(in, data.getKeyName());
     }
 
     private static void list(){
@@ -86,14 +90,19 @@ public class setProperty implements Serializable {
 
     private static void save(){
         dat.setMap(map);
+        names.setMap(name);
+
         dat.save();
+        names.save();
     }
 
     private static void delete(){
         Console.WriteLine("削除するデータを選んでください");
         list();
 
-        data = (Data) map.get(Console.ReadLine());
-        map.put(data.getKeyName(), null);
+        String input = Console.ReadLine();
+        String Key = (String) name.get(input);
+        name.put(input, null);
+        map.put(Key, null);
     }
 }
