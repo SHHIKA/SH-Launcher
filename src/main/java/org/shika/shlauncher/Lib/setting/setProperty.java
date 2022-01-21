@@ -93,6 +93,7 @@ public class setProperty implements Serializable {
         Console.WriteLine("削除するデータを選んでください");
         list();
 
-        map.put(Console.ReadLine(), null);
+        data = (Data) map.get(Console.ReadLine());
+        map.put(data.getKeyName(), null);
     }
 }

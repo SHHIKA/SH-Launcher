@@ -8,7 +8,6 @@ import org.progcoa.pbjavautils.SystemCall;
 import org.shika.shlauncher.Lib.setting.Data;
 
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Key implements KeyBoardEvent {
@@ -20,6 +19,8 @@ public class Key implements KeyBoardEvent {
         Console.WriteLine(e.paramString());
         String str = NativeKeyEvent.getKeyText(e.getKeyCode());
         Console.WriteLine(str);
+
+        if(e.getModifiers() != KeyEvent.ALT_MASK + KeyEvent.CTRL_MASK) return;
 
         if(map.get(str) != null){
             Data data = (Data) map.get(str);
