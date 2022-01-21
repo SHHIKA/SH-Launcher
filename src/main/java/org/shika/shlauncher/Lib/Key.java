@@ -20,6 +20,10 @@ public class Key implements KeyBoardEvent {
         String str = NativeKeyEvent.getKeyText(e.getKeyCode());
         Console.WriteLine(str);
 
+        if(e.getModifiers() == KeyEvent.CTRL_MASK + KeyEvent.SHIFT_MASK + KeyEvent.ALT_MASK && str.equals("C")){
+            System.exit(0);
+        }
+
         if(e.getModifiers() != KeyEvent.ALT_MASK + KeyEvent.CTRL_MASK) return;
 
         if(map.get(str) != null){
